@@ -25,9 +25,7 @@ jobs:
     - name: Install Dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
-    # ❌ شيلنا خطوة key:generate لأنها بتكسر الـ CI
-    # - name: Generate key
-    #   run: php artisan key:generate
+    # شيلنا خطوة Generate key هنا
 
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
@@ -54,6 +52,7 @@ jobs:
 
     - name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
       env:
+        APP_KEY: ${{ secrets.APP_KEY }}
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: php artisan test
